@@ -94,14 +94,14 @@ export default function PaymentTypeStats({
         <h3 className="text-xs min-[390px]:text-sm min-[540px]:text-[0.9375rem] font-semibold text-gray-700">
           결제 수단별 통계
         </h3>
-        <span className="text-gray-400 text-[0.625rem] min-[390px]:text-xs min-[540px]:text-sm">
+        <span className="text-gray-400 text-[0.625rem] pb-1 min-[390px]:text-xs min-[540px]:text-sm">
           ⓘ
         </span>
       </div>
 
       {/* 프로그레스 바 */}
       <div className="mb-4 min-[390px]:mb-5 min-[540px]:mb-7">
-        <div className="flex h-4 min-[540px]:h-10 md:h-12 rounded-full overflow-hidden bg-gray-100 shadow-inner">
+        <div className="flex h-4 min-[540px]:h-9 md:h-10 rounded-full overflow-hidden bg-gray-100 shadow-inner">
           {payTypeStats.map((stat, index) => (
             <div
               key={stat.type}

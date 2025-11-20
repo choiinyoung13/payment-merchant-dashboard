@@ -88,3 +88,15 @@ export interface PaymentFilterContextType {
     setMerchantSearch: Dispatch<SetStateAction<string | null>>
   }
 }
+
+// 가맹점 필터 컨텍스트 타입
+export interface MerchantFilterContextType {
+  byStatus: {
+    status: string | null
+    setStatus: Dispatch<SetStateAction<string | null>>
+  }
+  bySearch: {
+    search: string | null
+    setSearch: Dispatch<SetStateAction<string | null>>
+  }
+}

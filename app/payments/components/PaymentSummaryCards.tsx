@@ -1,45 +1,10 @@
 'use client'
 
 import { PaymentListRes, MerchantListRes } from '@/lib/types'
-import { useContext, ReactNode } from 'react'
+import { useContext } from 'react'
 import { PaymentFilterContext } from '@/store/payment-filter'
 import { getFilteredPayments, getTotalAmount } from '../utils/paymentHelper'
-
-type SummaryCardProps = {
-  title: string
-  value: string | number
-  valueSize?: 'default' | 'small'
-  footer?: ReactNode
-}
-
-function SummaryCard({
-  title,
-  value,
-  valueSize = 'default',
-  footer,
-}: SummaryCardProps) {
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-4 flex flex-col gap-1">
-      <div className="flex items-center gap-1">
-        <span className="text-gray-700 text-xs min-[540px]:text-[0.9375rem] font-semibold">
-          {title}
-        </span>
-        <span className="text-gray-400 text-xs min-[540px]:text-sm">ⓘ</span>
-      </div>
-      <div
-        className={`
-          text-xl min-[540px]:text-1xl md:text-2xl
-          text-gray-900 mt-1 font-bold${
-            valueSize === 'small' ? ' truncate' : ''
-          }
-        `}
-      >
-        {value}
-      </div>
-      {footer && <div className="mt-2">{footer}</div>}
-    </div>
-  )
-}
+import SummaryCard from '@/components/SummaryCard'
 
 export default function PaymentSummaryCards({
   payments = [],
@@ -99,7 +64,7 @@ export default function PaymentSummaryCards({
     : 0
 
   return (
-    <div className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-4 min-[390px]:gap-6">
       <SummaryCard
         title="총 거래 건수"
         value={filteredPayments.length}

@@ -712,7 +712,7 @@ const raw2025_11: [string, string, string, string, string, string, string][] = [
     '210000.00',
     'KRW',
     'DEVICE',
-    'SUCCESS',
+    'CANCELLED',
     '2025-11-20T12:00:00.000Z',
   ],
   [
@@ -732,7 +732,7 @@ const raw2025_11: [string, string, string, string, string, string, string][] = [
     '125000.00',
     'KRW',
     'DEVICE',
-    'SUCCESS',
+    'FAILED',
     '2025-11-25T15:00:00.000Z',
   ],
   [
