@@ -61,7 +61,7 @@ export default function MerchantsTable({
           onClick={() => onMerchantClick?.(merchant.mchtCode)}
           className={`flex items-center pr-3 min-[390px]:pr-4 sm:pr-6 py-2.5 min-[390px]:py-3 mb-2 min-[390px]:mb-3 hover:bg-gray-100/50 transition-colors active:bg-gray-100 relative gap-3 cursor-pointer`}
         >
-          {/* 제일 좌측: 상태 뱃지 */}
+          {/* 상태 뱃지 */}
           <div className="shrink-0 flex items-center">
             {getStatusBadge(merchant.status)}
           </div>
@@ -82,7 +82,10 @@ export default function MerchantsTable({
               </div>
             </div>
           </div>
-          <div className="shrink-0 flex items-center">
+          <div className="shrink-0 flex items-center gap-2">
+            <span className="text-[10px] min-[390px]:text-xs text-gray-400">
+              상세 정보
+            </span>
             <svg
               className="w-4 h-4 text-gray-400"
               fill="none"

@@ -3,6 +3,7 @@
 import { PaymentFilterContext } from '@/store/payment-filter'
 import { useContext, useState, useEffect } from 'react'
 import { getCurrentMonth } from '@/utils/dateHelper'
+import { formatDisplay } from '../utils/paymentHelper'
 
 const MONTHS = [
   '1월',
@@ -19,7 +20,13 @@ const MONTHS = [
   '12월',
 ]
 
-export default function MonthDatePicker() {
+type MonthDatePickerProps = {
+  variant?: 'default' | 'icon-only'
+}
+
+export default function MonthDatePicker({
+  variant = 'default',
+}: MonthDatePickerProps = {}) {
   const { startMonth, endMonth, setStartMonth, setEndMonth } =
     useContext(PaymentFilterContext).byDate
 
@@ -53,18 +60,6 @@ export default function MonthDatePicker() {
       document.removeEventListener('keydown', handleEscape)
     }
   }, [isOpen])
-
-  const formatDisplay = (start: string, end: string) => {
-    if (!start) return '기간을 선택하세요'
-    const [startYear, startMon] = start.split('-')
-
-    const startDisplay = `${startYear}년 ${parseInt(startMon)}월`
-    if (!end || start === end) return startDisplay
-
-    const [endYear, endMon] = end.split('-')
-    const endDisplay = `${endYear}년 ${parseInt(endMon)}월`
-    return `${startDisplay} ~ ${endDisplay}`
-  }
 
   const calculateMonthDiff = () => {
     if (!tempStart || !tempEnd) return 1
@@ -269,6 +264,32 @@ export default function MonthDatePicker() {
   const hasDateFilter = startMonth !== currentMonth || endMonth !== currentMonth
 
   if (!isOpen) {
+    if (variant === 'icon-only') {
+      return (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
+          title="기간 선택"
+        >
+          <svg
+            className={`w-4 h-4 min-[390px]:w-5 min-[390px]:h-5 transition-colors ${
+              hasDateFilter ? 'text-[#425aeb]' : 'text-gray-400'
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+        </button>
+      )
+    }
+
     return (
       <button
         onClick={() => setIsOpen(true)}
@@ -296,11 +317,37 @@ export default function MonthDatePicker() {
     )
   }
 
-  return (
-    <>
+  const renderButton = (onClick: () => void) => {
+    if (variant === 'icon-only') {
+      return (
+        <button
+          onClick={onClick}
+          className="p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
+          title="기간 선택"
+        >
+          <svg
+            className={`w-4 h-4 min-[390px]:w-5 min-[390px]:h-5 transition-colors ${
+              hasDateFilter ? 'text-[#425aeb]' : 'text-gray-400'
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+        </button>
+      )
+    }
+
+    return (
       <button
-        onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-1.5 min-[390px]:gap-2 lg:gap-3 bg-white border border-gray-300 rounded-lg px-1.5 min-[390px]:px-2 lg:px-3.5 py-1.5 min-[390px]:py-2 transition-all"
+        onClick={onClick}
+        className="inline-flex items-center gap-1.5 min-[390px]:gap-2 lg:gap-3 bg-white border border-gray-300 rounded-lg px-1.5 min-[390px]:px-2 lg:px-3.5 py-1.5 min-[390px]:py-2 hover:bg-gray-100 transition-all cursor-pointer"
       >
         <svg
           className={`w-4 h-4 min-[390px]:w-5 min-[390px]:h-5 transition-colors ${
@@ -321,6 +368,16 @@ export default function MonthDatePicker() {
           {formatDisplay(tempStart, tempEnd)}
         </span>
       </button>
+    )
+  }
+
+  if (!isOpen) {
+    return renderButton(() => setIsOpen(true))
+  }
+
+  return (
+    <>
+      {renderButton(() => setIsOpen(false))}
 
       <div
         className="fixed inset-0 bg-black/30 z-40 transition-opacity"

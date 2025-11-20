@@ -3,8 +3,13 @@
 import { PaymentListRes, MerchantListRes } from '@/lib/types'
 import { useContext } from 'react'
 import { PaymentFilterContext } from '@/store/payment-filter'
-import { getFilteredPayments, getTotalAmount } from '../utils/paymentHelper'
+import { getFilteredPayments } from '../utils/paymentHelper'
 import SummaryCard from '@/components/SummaryCard'
+import {
+  getPaymentStatusCounts,
+  getTopMerchantByAmount,
+  getTotalAmount,
+} from '@/utils/aggregation'
 
 export default function PaymentSummaryCards({
   payments = [],
@@ -34,34 +39,10 @@ export default function PaymentSummaryCards({
     merchants
   )
 
-  const statusCounts = {
-    SUCCESS: filteredPayments.filter(p => p.status === 'SUCCESS').length,
-    FAILED: filteredPayments.filter(p => p.status === 'FAILED').length,
-    CANCELLED: filteredPayments.filter(p => p.status === 'CANCELLED').length,
-  }
+  const statusCounts = getPaymentStatusCounts(filteredPayments)
 
-  // 가맹점별 결제 금액 총합 계산
-  const merchantAmounts = filteredPayments.reduce((acc, payment) => {
-    const amount = parseFloat(payment.amount)
-    if (!acc[payment.mchtCode]) {
-      acc[payment.mchtCode] = 0
-    }
-    acc[payment.mchtCode] += amount
-    return acc
-  }, {} as Record<string, number>)
-
-  // 가장 높은 금액의 가맹점 찾기
-  const topMerchantCode = Object.entries(merchantAmounts).sort(
-    ([, a], [, b]) => b - a
-  )[0]?.[0]
-
-  const topMerchant = topMerchantCode
-    ? merchants.find(m => m.mchtCode === topMerchantCode)
-    : null
-
-  const topMerchantAmount = topMerchantCode
-    ? merchantAmounts[topMerchantCode]
-    : 0
+  const { merchant: topMerchant, amount: topMerchantAmount } =
+    getTopMerchantByAmount(filteredPayments, merchants)
 
   return (
     <div className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-4 min-[390px]:gap-6">

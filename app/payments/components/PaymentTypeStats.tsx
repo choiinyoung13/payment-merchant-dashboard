@@ -4,6 +4,7 @@ import { PaymentListRes, MerchantListRes } from '@/lib/types'
 import { useContext } from 'react'
 import { PaymentFilterContext } from '@/store/payment-filter'
 import { getFilteredPayments } from '../utils/paymentHelper'
+import { getPayTypeCounts } from '@/utils/aggregation'
 
 type PayTypeInfo = {
   label: string
@@ -62,10 +63,7 @@ export default function PaymentTypeStats({
   )
 
   // 결제 수단별 집계
-  const payTypeCounts = filteredPayments.reduce((acc, payment) => {
-    acc[payment.payType] = (acc[payment.payType] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+  const payTypeCounts = getPayTypeCounts(filteredPayments)
 
   const totalCount = filteredPayments.length
 

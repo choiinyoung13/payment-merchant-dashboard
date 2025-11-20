@@ -83,7 +83,14 @@ export const getFilteredPayments = (
     })
 }
 
-// 총 거래액 계산
-export const getTotalAmount = (payments: PaymentListRes[]) => {
-  return payments.reduce((acc, payment) => acc + parseFloat(payment.amount), 0)
+// 기간 표시 형식 변환
+export const formatDisplay = (start: string, end: string) => {
+  if (!start) return '기간을 선택하세요'
+  const [startYear, startMon] = start.split('-')
+
+  const startDisplay = `${startYear}년 ${parseInt(startMon)}월`
+  if (!end || start === end) return startDisplay
+
+  const [endYear, endMon] = end.split('-')
+  return `${startDisplay} ~ ${endYear}년 ${parseInt(endMon)}월`
 }

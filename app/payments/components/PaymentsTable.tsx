@@ -4,6 +4,7 @@ import { PaymentListRes, MerchantListRes } from '@/lib/types'
 import { useContext } from 'react'
 import { PaymentFilterContext } from '@/store/payment-filter'
 import { getFilteredPayments } from '../utils/paymentHelper'
+import { getMerchantName } from '@/utils/dateHelper'
 
 export default function PaymentsTable({
   payments = [],
@@ -32,12 +33,6 @@ export default function PaymentsTable({
     merchantSearch,
     merchants
   )
-
-  // 가맹점 코드를 가맹점명으로 매핑
-  const getMerchantName = (mchtCode: string) => {
-    const merchant = merchants.find(m => m.mchtCode === mchtCode)
-    return merchant?.mchtName || mchtCode
-  }
 
   if (filteredPayments.length === 0) {
     return (
@@ -100,7 +95,7 @@ export default function PaymentsTable({
           <div className="flex-1 min-w-0 flex flex-col justify-center pl-9 min-[390px]:pl-10 sm:pl-12">
             <div className="flex items-center justify-between gap-1.5 min-[390px]:gap-2 mb-0.5 min-[390px]:mb-1">
               <h3 className="text-sm min-[390px]:text-base sm:text-md font-bold text-gray-900 truncate">
-                {getMerchantName(payment.mchtCode)}
+                {getMerchantName(payment.mchtCode, merchants || [])}
               </h3>
               <span className="text-sm min-[390px]:text-lg font-bold text-gray-900 whitespace-nowrap">
                 {parseFloat(payment.amount).toLocaleString()}

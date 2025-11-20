@@ -5,6 +5,7 @@ type SummaryCardProps = {
   value: string | number
   valueSize?: 'default' | 'small'
   footer?: ReactNode
+  headerAction?: ReactNode
 }
 
 export default function SummaryCard({
@@ -12,16 +13,20 @@ export default function SummaryCard({
   value,
   valueSize = 'default',
   footer,
+  headerAction,
 }: SummaryCardProps) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-4 py-3 min-[390px]:px-6 min-[390px]:py-4 flex flex-col gap-1 min-[390px]:gap-2">
-      <div className="flex items-center gap-1">
-        <span className="text-gray-700 text-xs min-[540px]:text-[0.9375rem] font-semibold">
-          {title}
-        </span>
-        <span className="text-gray-400 text-xs pb-1 min-[540px]:text-sm">
-          ⓘ
-        </span>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1">
+          <span className="text-gray-700 text-xs min-[540px]:text-[0.9375rem] font-semibold">
+            {title}
+          </span>
+          <span className="text-gray-400 text-xs pb-1 min-[540px]:text-sm">
+            ⓘ
+          </span>
+        </div>
+        {headerAction}
       </div>
       <div
         className={`

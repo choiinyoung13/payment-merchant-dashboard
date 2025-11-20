@@ -11,6 +11,10 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
+import {
+  getMerchantStatusCounts,
+  getBizTypeCounts,
+} from '@/utils/aggregation'
 
 const STATUS_LABELS: Record<string, string> = {
   ACTIVE: '활성',
@@ -48,16 +52,10 @@ export default function MerchantStatusStats({
   }, [])
 
   // 상태별 집계
-  const statusCounts = merchants.reduce((acc, merchant) => {
-    acc[merchant.status] = (acc[merchant.status] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+  const statusCounts = getMerchantStatusCounts(merchants)
 
   // 업종별 집계
-  const bizTypeCounts = merchants.reduce((acc, merchant) => {
-    acc[merchant.bizType] = (acc[merchant.bizType] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+  const bizTypeCounts = getBizTypeCounts(merchants)
 
   // 상태별 차트 데이터
   const statusData = Object.entries(statusCounts)

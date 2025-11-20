@@ -1,25 +1,6 @@
 import { useContext } from 'react'
 import { PaymentFilterContext } from '@/store/payment-filter'
-
-type PayTypeSortButtonProps = {
-  label: string
-  active: boolean
-  onClick: () => void
-}
-
-function PayTypeSortButton({ label, active, onClick }: PayTypeSortButtonProps) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`px-2 min-[390px]:px-4 py-2.5 text-sm min-[390px]:text-base font-black rounded-lg transition-colors cursor-pointer ${
-        active ? 'bg-white' : 'bg-[#f2f4f6] text-gray-500 hover:bg-white'
-      }`}
-    >
-      {label}
-    </button>
-  )
-}
+import SortButton from '@/components/SortButton'
 
 export default function PayTypeSort() {
   const { payType, setPayType } = useContext(PaymentFilterContext).byPayType
@@ -32,30 +13,35 @@ export default function PayTypeSort() {
 
   return (
     <div className="grid grid-cols-3 gap-2 bg-[#f2f4f6] p-1 rounded-lg">
-      <PayTypeSortButton
+      <SortButton
         label="ONLINE"
         active={payType === 'ONLINE'}
         onClick={() => handleClick('ONLINE')}
+        flex={false}
       />
-      <PayTypeSortButton
+      <SortButton
         label="DEVICE"
         active={payType === 'DEVICE'}
         onClick={() => handleClick('DEVICE')}
+        flex={false}
       />
-      <PayTypeSortButton
+      <SortButton
         label="MOBILE"
         active={payType === 'MOBILE'}
         onClick={() => handleClick('MOBILE')}
+        flex={false}
       />
-      <PayTypeSortButton
+      <SortButton
         label="VACT"
         active={payType === 'VACT'}
         onClick={() => handleClick('VACT')}
+        flex={false}
       />
-      <PayTypeSortButton
+      <SortButton
         label="BILLING"
         active={payType === 'BILLING'}
         onClick={() => handleClick('BILLING')}
+        flex={false}
       />
     </div>
   )
