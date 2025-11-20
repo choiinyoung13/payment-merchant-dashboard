@@ -6,8 +6,8 @@ import PaymentFilterContextProvider from '@/store/payment-filter'
 import MerchantFilterContextProvider from '@/store/merchant-filter'
 
 export const metadata: Metadata = {
-  title: 'PG 대시보드',
-  description: '결제대행사 대시보드',
+  title: '[(주)올페이즈] 프론트엔드 과제',
+  description: '[(주)올페이즈] 프론트엔드 과제',
 }
 
 export default function RootLayout({
