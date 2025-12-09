@@ -38,6 +38,10 @@ export default function MonthDatePicker({
   const [currentMonth, setCurrentMonth] = useState<string>('')
 
   useEffect(() => {
+    console.log(isOpen)
+  }, [isOpen])
+
+  useEffect(() => {
     // 클라이언트에서만 실행하여 Hydration 에러 방지
     const now = new Date()
     const currentYear = now.getFullYear()
